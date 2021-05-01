@@ -24,4 +24,10 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  // ${//to and from are Route Object,next() must be called to resolve the hook}
+  
+})
+
+
 export default router

@@ -53,7 +53,7 @@ module.exports = {
         // proxy: {
         //     '/api': {
         //         target: 'http://www.baidu.com/api',
-        //         changeOrigin: true, // 允许websockets跨域
+        //         changeOrigin: true, // 允许webSockets跨域
         //         // ws: true,
         //         pathRewrite: {
         //             '^/api': ''
