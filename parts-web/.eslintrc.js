@@ -1,4 +1,4 @@
-module.exports = {
+zmodule.exports = {
   root: true,
   env: {
     node: true

@@ -19,6 +19,7 @@ module.exports = {
         Object.assign(config, {
             // 开发生产共同配置
             resolve: {
+                extensions: ['.js', '.vue', '.json'],
                 alias: {
                     '@': path.resolve(__dirname, './src'),
                     '@c': path.resolve(__dirname, './src/components'),
@@ -43,7 +44,7 @@ module.exports = {
     // webpack-dev-server 相关配置
     devServer: {
         open: process.platform === 'darwin',
-        host: 'localhost', // 允许外部ip访问
+        host: '0.0.0.0', // 允许外部ip访问
         port: 8001, // 端口
         https: false, // 启用https
         overlay: {
@@ -62,5 +63,7 @@ module.exports = {
         // } // 代理转发配置，用于调试环境
     },
     // 第三方插件配置
-    pluginOptions: {}
+    pluginOptions: {
+        
+    }
 }
