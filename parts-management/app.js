@@ -19,12 +19,14 @@ let usersRouter = require('./routes/users');
 
 const login = require('./src/modules/system/controller/loginController')
 const logout = require('./src/modules/system/controller/logoutController')
-
+const menuRouter = require('./src/modules/system/controller/menuController')
 
 let app = express();
 // app.use(express.urlencoded())
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+// 链接数据库
  mongoose.connect('mongodb://localhost:27017/partsManagement',{
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -47,9 +49,6 @@ app.use(expressJwt({
 }).unless({
   path: ['/', '/login','/captcha.jpg']     //除了这个地址，其他的URL都需要验证
 }));
-
-
-
 
 // 解析用户信息
 app.use(function (req, res, next) {
@@ -82,6 +81,7 @@ app.use('/users', usersRouter);
 app.use("/login", login)
 app.use("/captcha.jpg", captchaRouter)
 app.use("/logout", logout)
+app.use("/menu",menuRouter)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

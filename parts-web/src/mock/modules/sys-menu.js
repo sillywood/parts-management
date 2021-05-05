@@ -500,63 +500,66 @@ var navDataList = [
 ]
 
 // 获取导航菜单列表 / 权限
-export function nav () {
-  return {
-    // isOpen: false,
-    url: '/sys/menu/nav',
-    type: 'get',
-    data: {
-      'msg': 'success',
-      'code': 0,
-      'menuList': navDataList,
-      'permissions': [
-        'sys:schedule:info',
-        'sys:menu:update',
-        'sys:menu:delete',
-        'sys:config:info',
-        'sys:menu:list',
-        'sys:config:save',
-        'sys:config:update',
-        'sys:schedule:resume',
-        'sys:user:delete',
-        'sys:config:list',
-        'sys:user:update',
-        'sys:role:list',
-        'sys:menu:info',
-        'sys:menu:select',
-        'sys:schedule:update',
-        'sys:schedule:save',
-        'sys:role:select',
-        'sys:user:list',
-        'sys:menu:save',
-        'sys:role:save',
-        'sys:schedule:log',
-        'sys:role:info',
-        'sys:schedule:delete',
-        'sys:role:update',
-        'sys:schedule:list',
-        'sys:user:info',
-        'sys:schedule:run',
-        'sys:config:delete',
-        'sys:role:delete',
-        'sys:user:save',
-        'sys:schedule:pause',
-        'sys:log:list',
-        'sys:oss:all'
-      ]
-    }
-  }
-}
+// export function nav () {
+//   return {
+//     // isOpen: false,
+//     url: '/sys/menu/nav',
+//     type: 'get',
+//     data: {
+//       'msg': 'success',
+//       'code': 0,
+//       'menuList': navDataList,
+//       'permissions': [
+//         'sys:schedule:info',
+//         'sys:menu:update',
+//         'sys:menu:delete',
+//         'sys:config:info',
+//         'sys:menu:list',
+//         'sys:config:save',
+//         'sys:config:update',
+//         'sys:schedule:resume',
+//         'sys:user:delete',
+//         'sys:config:list',
+//         'sys:user:update',
+//         'sys:role:list',
+//         'sys:menu:info',
+//         'sys:menu:select',
+//         'sys:schedule:update',
+//         'sys:schedule:save',
+//         'sys:role:select',
+//         'sys:user:list',
+//         'sys:menu:save',
+//         'sys:role:save',
+//         'sys:schedule:log',
+//         'sys:role:info',
+//         'sys:schedule:delete',
+//         'sys:role:update',
+//         'sys:schedule:list',
+//         'sys:user:info',
+//         'sys:schedule:run',
+//         'sys:config:delete',
+//         'sys:role:delete',
+//         'sys:user:save',
+//         'sys:schedule:pause',
+//         'sys:log:list',
+//         'sys:oss:all'
+//       ]
+//     }
+//   }
+// }
+
+
+
 
 // 获取菜单列表
-export function list () {
-  return {
-    // isOpen: false,
-    url: '/sys/menu/list',
-    type: 'get',
-    data: dataList
-  }
-}
+// export function list () {
+//   return {
+//     // isOpen: false,
+//     url: '/sys/menu/list',
+//     type: 'get',
+//     data: dataList
+//   }
+// }
 
 // 获取上级菜单
 export function select () {
