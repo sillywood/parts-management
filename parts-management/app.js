@@ -1,20 +1,31 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
+
+const mongoose = require("mongoose")
+
 const expressJwt = require('express-jwt');
+const bodyParser = require('body-parser')
+
 
 let tokenServe = require('./src/modules/common/token')
 
 let captchaRouter = require('./src/modules/system/controller/captchaController')
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
 const login = require('./src/modules/system/controller/loginController')
 
-var app = express();
-
-
+let app = express();
+// app.use(express.urlencoded())
+app.use(bodyParser.json()) // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+ mongoose.connect('mongodb://localhost:27017/partsManagement',{
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+})
 
 
 

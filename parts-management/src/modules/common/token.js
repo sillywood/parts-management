@@ -3,10 +3,10 @@ const jwt = require('jsonwebtoken');
 //秘钥
 let signKey = 'yhjx_token';
 //生成token
-exports.setToken = function (username) {
+exports.setToken = function (userId) {
     return new Promise((resolve, reject) => {
         const token = jwt.sign({
-            username: username
+            userId: userId
         }, signKey, { expiresIn: 60 * 60 * 24 * 3 });
         // let info = jwt.verify(token.split(' ')[1], signkey)
         // console.log(info);
@@ -14,8 +14,9 @@ exports.setToken = function (username) {
         resolve(token);
     })
 }
+
 //验证token
-const verToken = function (token) {
+exports.verToken = function (token) {
     return new Promise((resolve, reject) => {
         var info = jwt.verify(token, signKey, (error, decoded) => {
             if (error) {
