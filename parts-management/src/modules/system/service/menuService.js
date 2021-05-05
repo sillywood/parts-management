@@ -34,7 +34,7 @@ exports.getMenuNav =async function(menus){
             let menuList = []
 
             if (menuChildren.length >= 1) {   //如果存在子目录，则获取孙目录
-                 menuList = await this.getMenuList(menuChildren)
+                menuList = await this.getMenuNav(menuChildren)
             }
             menuLists[menuIndex].list = menuList
             // console.log("menuService 29 ==============");

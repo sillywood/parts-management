@@ -14,7 +14,7 @@ let tokenServe = require('./src/modules/common/token')
 
 let captchaRouter = require('./src/modules/system/controller/captchaController')
 let indexRouter = require('./routes/index');
-let usersRouter = require('./routes/users');
+const usersRouter = require('./src/modules/system/controller/userController');
 
 
 const login = require('./src/modules/system/controller/loginController')
@@ -77,7 +77,7 @@ app.use(function (req, res, next) {
 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/user', usersRouter);
 app.use("/login", login)
 app.use("/captcha.jpg", captchaRouter)
 app.use("/logout", logout)

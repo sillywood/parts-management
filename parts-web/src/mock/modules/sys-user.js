@@ -36,18 +36,18 @@ export function list () {
 }
 
 // 获取用户信息
-export function info () {
-  return {
-    // isOpen: false,
-    url: '/sys/user/info',
-    type: 'get',
-    data: {
-      'msg': 'success',
-      'code': 0,
-      'user': dataList[0]
-    }
-  }
-}
+// export function info () {
+//   return {
+//     // isOpen: false,
+//     url: '/sys/user/info',
+//     type: 'get',
+//     data: {
+//       'msg': 'success',
+//       'code': 0,
+//       'user': dataList[0]
+//     }
+//   }
+// }
 
 // 修改密码
 export function updatePassword () {

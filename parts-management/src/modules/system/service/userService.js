@@ -7,6 +7,15 @@ exports.getUserByName = function (username) {
     return userModel.find({ username: username })
 }
 
-exports.getUserById = function(userId){
-    return userModel.findOne({_id:userId})
+exports.getUserById = async function(userId){
+    let user = {}
+     await userModel.findOne({_id:userId},(err,doc)=>{
+         if(err){
+             console.log(err);
+         }else{
+             user = doc
+         }
+     })
+
+     return user
 }
