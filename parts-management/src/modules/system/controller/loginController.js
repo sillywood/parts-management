@@ -12,7 +12,7 @@ router.post("/", (req, res) => {
     let password = data.password
     let captcha = data.captcha
 
-
+    
     //验证验证码是否正确
     captchaService.checkCaptcha(captcha, uuid).then(isOk => {
         // console.log(isOk);
