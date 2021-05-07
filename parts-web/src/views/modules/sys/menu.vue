@@ -6,7 +6,7 @@
       </el-form-item>
     </el-form>
 
-    <el-table :data="dataList" row-key="menuId" border style="width: 100%; ">
+    <el-table v-loading="dataListLoading" :data="dataList" row-key="menuId" border style="width: 100%; ">
       <el-table-column prop="name" header-align="center" min-width="150" label="名称">
       </el-table-column>
       <el-table-column prop="parentName" header-align="center" align="center" width="120" label="上级菜单">
@@ -95,7 +95,7 @@
           type: 'warning'
         }).then(() => {
           this.$http({
-            url: this.$http.adornUrl(`/sys/menu/delete/${id}`),
+            url: this.$http.adornUrl(`/menu/delete/${id}`),
             method: 'post',
             data: this.$http.adornData()
           }).then(({

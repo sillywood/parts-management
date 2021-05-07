@@ -562,70 +562,70 @@ var navDataList = [
 // }
 
 // 获取上级菜单
-export function select () {
-  let dataList = JSON.parse(JSON.stringify(navDataList))
-  dataList = dataList.concat(dataList[0].list)
-  return {
-    // isOpen: false,
-    url: '/sys/menu/select',
-    type: 'get',
-    data: {
-      'msg': 'success',
-      'code': 0,
-      'menuList': dataList
-    }
-  }
-}
+// export function select () {
+//   let dataList = JSON.parse(JSON.stringify(navDataList))
+//   dataList = dataList.concat(dataList[0].list)
+//   return {
+//     // isOpen: false,
+//     url: '/sys/menu/select',
+//     type: 'get',
+//     data: {
+//       'msg': 'success',
+//       'code': 0,
+//       'menuList': dataList
+//     }
+//   }
+// }
 
 // 获取菜单信息
-export function info () {
-  return {
-    // isOpen: false,
-    url: '/sys/menu/info',
-    type: 'get',
-    data: {
-      'msg': 'success',
-      'code': 0,
-      'menu': dataList[0]
-    }
-  }
-}
+// export function info () {
+//   return {
+//     // isOpen: false,
+//     url: '/sys/menu/info',
+//     type: 'get',
+//     data: {
+//       'msg': 'success',
+//       'code': 0,
+//       'menu': dataList[0]
+//     }
+//   }
+// }
 
 // 添加菜单
-export function add () {
-  return {
-    // isOpen: false,
-    url: '/sys/menu/save',
-    type: 'post',
-    data: {
-      'msg': 'success',
-      'code': 0
-    }
-  }
-}
+// export function add () {
+//   return {
+//     // isOpen: false,
+//     url: '/sys/menu/save',
+//     type: 'post',
+//     data: {
+//       'msg': 'success',
+//       'code': 0
+//     }
+//   }
+// }
 
 // 修改菜单
-export function update () {
-  return {
-    // isOpen: false,
-    url: '/sys/menu/update',
-    type: 'post',
-    data: {
-      'msg': 'success',
-      'code': 0
-    }
-  }
-}
+// export function update () {
+//   return {
+//     // isOpen: false,
+//     url: '/sys/menu/update',
+//     type: 'post',
+//     data: {
+//       'msg': 'success',
+//       'code': 0
+//     }
+//   }
+// }
 
 // 删除菜单
-export function del () {
-  return {
-    // isOpen: false,
-    url: '/sys/menu/delete',
-    type: 'post',
-    data: {
-      'msg': 'success',
-      'code': 0
-    }
-  }
-}
+// export function del () {
+//   return {
+//     // isOpen: false,
+//     url: '/sys/menu/delete',
+//     type: 'post',
+//     data: {
+//       'msg': 'success',
+//       'code': 0
+//     }
+//   }
+// }

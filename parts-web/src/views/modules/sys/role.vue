@@ -7,8 +7,8 @@
       <el-form-item>
         <el-button @click="getDataList()">查询</el-button>
         <el-button v-if="isAuth('sys:role:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-        <el-button v-if="isAuth('sys:role:delete')" type="danger" @click="deleteHandle()"
-          :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <!-- <el-button v-if="isAuth('sys:role:delete')" type="danger" @click="deleteHandle()"
+          :disabled="dataListSelections.length <= 0">批量删除</el-button> -->
       </el-form-item>
     </el-form>
     <el-table :data="dataList" border v-loading="dataListLoading" @selection-change="selectionChangeHandle"
@@ -69,7 +69,7 @@
       getDataList() {
         this.dataListLoading = true
         this.$http({
-          url: this.$http.adornUrl('/sys/role/list'),
+          url: this.$http.adornUrl('/role/list'),
           method: 'get',
           params: this.$http.adornParams({
             'page': this.pageIndex,
@@ -81,7 +81,7 @@
         }) => {
           if (data && data.code === 0) {
             this.dataList = data.page.list
-            this.totalPage = data.page.totalCount
+            this.totalPage = data.page.totalCount*1
           } else {
             this.dataList = []
             this.totalPage = 0
@@ -122,7 +122,7 @@
           type: 'warning'
         }).then(() => {
           this.$http({
-            url: this.$http.adornUrl('/sys/role/delete'),
+            url: this.$http.adornUrl('/role/delete'),
             method: 'post',
             data: this.$http.adornData(ids, false)
           }).then(({

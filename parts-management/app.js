@@ -20,8 +20,10 @@ const usersRouter = require('./src/modules/system/controller/userController');
 const login = require('./src/modules/system/controller/loginController')
 const logout = require('./src/modules/system/controller/logoutController')
 const menuRouter = require('./src/modules/system/controller/menuController')
-
+const roleRouter = require('./src/modules/system/controller/roleController')
 let app = express();
+
+app.SUPER_USER = '60917ca9b2626454341616e7';
 // app.use(express.urlencoded())
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
@@ -81,8 +83,8 @@ app.use('/user', usersRouter);
 app.use("/login", login)
 app.use("/captcha.jpg", captchaRouter)
 app.use("/logout", logout)
-app.use("/menu",menuRouter)
-
+app.use("/menu",menuRouter(app))
+app.use("/role",roleRouter)
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
