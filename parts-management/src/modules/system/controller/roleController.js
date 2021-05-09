@@ -6,19 +6,21 @@ const roleService = require('../service/roleService')
 router.post('/save', function (req, res) {
     let roleEntity = req.body
     let menuIdList = roleEntity.menuIdList
-    let rolePromise = roleService.saveRole(roleEntity)
-    // console.log(roleId);
-
-    //存角色-菜单表
-    // rolePromise.then(roleId=>{
-    //     
-    // })
-
-
-    res.send({
-        code: 0,
-        msg: 'success'
+    roleService.saveRole(roleEntity, menuIdList,req.data.userId).then(result=>{
+        if(result == true){
+            res.send({
+                code: 0,
+                msg: 'success'
+            })
+        }else{
+            res.send({
+                code: 500,
+                msg: '服务器内部错误'
+            })
+        }
     })
+
+    
 })
 
 router.get('/list', function (req, res) {
@@ -53,35 +55,46 @@ router.get('/info/:id', function (req, res) {
 
             // 获取menuList
             res.send({
-                code:0,
-                role:role,
+                code: 0,
+                role: role,
                 msg: 'success'
             })
         }
+    }).catch(err=>{
+        console.log(err);
+        res.send({
+            code: 1,
+            msg: err
+        })
     })
 })
 
 
-router.post('/update',function(req,res){
+router.post('/update', function (req, res) {
     let data = req.body
     let menuIdList = data.menuIdList
-    roleService.update(data).then(result=>{
-        if(result){
+    roleService.update(data).then(result => {
+        if (result) {
             res.send({
-                code:0,
-                msg:'success'
+                code: 0,
+                msg: 'success'
             })
-        }else{
+        } else {
             // 更新menuIdList
             res.send({
-                code:1,
-                msg:'更新失败，请检查update接口'
+                code: 1,
+                msg: '更新失败，请检查update接口'
             })
         }
+    }).catch(err=>{
+        res.send({
+            code: 1,
+            msg: '更新失败，请检查update接口'
+        })
     })
 })
 
-router.post('/delete',function(req,res){
+router.post('/delete', function (req, res) {
     let id = req.body
     roleService.deleteById(id).then(result => {
         if (result) {
@@ -99,4 +112,26 @@ router.post('/delete',function(req,res){
     })
 })
 
-module.exports = router
+router.get('/select', function (req, res) {
+    let id = req.data.userId
+    if (id == appObj.SUPER_USER) {
+        roleService.getAllRoleList().then(list => {
+            res.send({
+                code: 0,
+                msg: 'success',
+                list: list
+            })
+        }).catch(err=>{
+            res.send({
+                code:500,
+                msg:err
+            })
+        })
+    }else{
+        roleService.getRoleByUserId(id)
+    }
+})
+module.exports = function (app) {
+    appObj = app
+    return router
+}

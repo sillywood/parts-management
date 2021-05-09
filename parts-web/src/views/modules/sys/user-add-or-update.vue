@@ -1,9 +1,7 @@
 <template>
-  <el-dialog
-    :title="!dataForm.id ? '新增' : '修改'"
-    :close-on-click-modal="false"
-    :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
+  <el-dialog :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :visible.sync="visible">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()"
+      label-width="80px">
       <el-form-item label="用户名" prop="userName">
         <el-input v-model="dataForm.userName" placeholder="登录帐号"></el-input>
       </el-form-item>
@@ -13,15 +11,16 @@
       <el-form-item label="确认密码" prop="comfirmPassword" :class="{ 'is-required': !dataForm.id }">
         <el-input v-model="dataForm.comfirmPassword" type="password" placeholder="确认密码"></el-input>
       </el-form-item>
-      <el-form-item label="邮箱" prop="email">
+      <!-- <el-form-item label="邮箱" prop="email">
         <el-input v-model="dataForm.email" placeholder="邮箱"></el-input>
       </el-form-item>
       <el-form-item label="手机号" prop="mobile">
         <el-input v-model="dataForm.mobile" placeholder="手机号"></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="角色" size="mini" prop="roleIdList">
         <el-checkbox-group v-model="dataForm.roleIdList">
-          <el-checkbox v-for="role in roleList" :key="role.roleId" :label="role.roleId">{{ role.roleName }}</el-checkbox>
+          <el-checkbox v-for="role in roleList" :key="role.roleId" :label="role.roleId">{{ role.roleName }}
+          </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="状态" size="mini" prop="status">
@@ -39,9 +38,12 @@
 </template>
 
 <script>
-  import { isEmail, isMobile } from '@/utils/validate'
+  import {
+    isEmail,
+    isMobile
+  } from '@/utils/validate'
   export default {
-    data () {
+    data() {
       var validatePassword = (rule, value, callback) => {
         if (!this.dataForm.id && !/\S/.test(value)) {
           callback(new Error('密码不能为空'))
@@ -58,20 +60,20 @@
           callback()
         }
       }
-      var validateEmail = (rule, value, callback) => {
-        if (!isEmail(value)) {
-          callback(new Error('邮箱格式错误'))
-        } else {
-          callback()
-        }
-      }
-      var validateMobile = (rule, value, callback) => {
-        if (!isMobile(value)) {
-          callback(new Error('手机号格式错误'))
-        } else {
-          callback()
-        }
-      }
+      // var validateEmail = (rule, value, callback) => {
+      //   if (!isEmail(value)) {
+      //     callback(new Error('邮箱格式错误'))
+      //   } else {
+      //     callback()
+      //   }
+      // }
+      // var validateMobile = (rule, value, callback) => {
+      //   if (!isMobile(value)) {
+      //     callback(new Error('手机号格式错误'))
+      //   } else {
+      //     callback()
+      //   }
+      // }
       return {
         visible: false,
         roleList: [],
@@ -87,35 +89,42 @@
           status: 1
         },
         dataRule: {
-          userName: [
-            { required: true, message: '用户名不能为空', trigger: 'blur' }
-          ],
-          password: [
-            { validator: validatePassword, trigger: 'blur' }
-          ],
-          comfirmPassword: [
-            { validator: validateComfirmPassword, trigger: 'blur' }
-          ],
-          email: [
-            { required: true, message: '邮箱不能为空', trigger: 'blur' },
-            { validator: validateEmail, trigger: 'blur' }
-          ],
-          mobile: [
-            { required: true, message: '手机号不能为空', trigger: 'blur' },
-            { validator: validateMobile, trigger: 'blur' }
-          ]
+          userName: [{
+            required: true,
+            message: '用户名不能为空',
+            trigger: 'blur'
+          }],
+          password: [{
+            validator: validatePassword,
+            trigger: 'blur'
+          }],
+          comfirmPassword: [{
+            validator: validateComfirmPassword,
+            trigger: 'blur'
+          }],
+          // email: [
+          //   { required: true, message: '邮箱不能为空', trigger: 'blur' },
+          //   { validator: validateEmail, trigger: 'blur' }
+          // ],
+          // mobile: [
+          //   { required: true, message: '手机号不能为空', trigger: 'blur' },
+          //   { validator: validateMobile, trigger: 'blur' }
+          // ]
         }
       }
     },
     methods: {
-      init (id) {
+      init(id) {
         this.dataForm.id = id || 0
         this.$http({
-          url: this.$http.adornUrl('/sys/role/select'),
+          url: this.$http.adornUrl('/role/select'),
           method: 'get',
           params: this.$http.adornParams()
-        }).then(({data}) => {
+        }).then(({
+          data
+        }) => {
           this.roleList = data && data.code === 0 ? data.list : []
+          console.log(this.roleList);
         }).then(() => {
           this.visible = true
           this.$nextTick(() => {
@@ -124,15 +133,19 @@
         }).then(() => {
           if (this.dataForm.id) {
             this.$http({
-              url: this.$http.adornUrl(`/sys/user/info/${this.dataForm.id}`),
+              url: this.$http.adornUrl(`/user/info/${this.dataForm.id}`),
               method: 'get',
               params: this.$http.adornParams()
-            }).then(({data}) => {
+            }).then(({
+              data
+            }) => {
               if (data && data.code === 0) {
+                // console.log(data);
                 this.dataForm.userName = data.user.username
-                this.dataForm.salt = data.user.salt
-                this.dataForm.email = data.user.email
-                this.dataForm.mobile = data.user.mobile
+                // this.dataForm.salt = data.user.salt
+                // this.dataForm.email = data.user.email
+                // this.dataForm.mobile = data.user.mobile
+                // console.log(data.user.roleIdList);
                 this.dataForm.roleIdList = data.user.roleIdList
                 this.dataForm.status = data.user.status
               }
@@ -141,23 +154,41 @@
         })
       },
       // 表单提交
-      dataFormSubmit () {
+      dataFormSubmit() {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
-            this.$http({
-              url: this.$http.adornUrl(`/sys/user/${!this.dataForm.id ? 'save' : 'update'}`),
-              method: 'post',
-              data: this.$http.adornData({
+            // console.log(this.dataForm);
+            let nowUser
+            if (this.dataForm.password == '') {
+              nowUser = {
+                'userId': this.dataForm.id || undefined,
+                'username': this.dataForm.userName,
+                // 'password': this.dataForm.password,
+                // 'salt': this.dataForm.salt,
+                // 'email': this.dataForm.email,
+                // 'mobile': this.dataForm.mobile,
+                'status': this.dataForm.status,
+                'roleIdList': this.dataForm.roleIdList
+              }
+            } else {
+              nowUser = {
                 'userId': this.dataForm.id || undefined,
                 'username': this.dataForm.userName,
                 'password': this.dataForm.password,
-                'salt': this.dataForm.salt,
-                'email': this.dataForm.email,
-                'mobile': this.dataForm.mobile,
+                // 'salt': this.dataForm.salt,
+                // 'email': this.dataForm.email,
+                // 'mobile': this.dataForm.mobile,
                 'status': this.dataForm.status,
                 'roleIdList': this.dataForm.roleIdList
-              })
-            }).then(({data}) => {
+              }
+            }
+            this.$http({
+              url: this.$http.adornUrl(`/user/${!this.dataForm.id ? 'save' : 'update'}`),
+              method: 'post',
+              data: this.$http.adornData(nowUser)
+            }).then(({
+              data
+            }) => {
               if (data && data.code === 0) {
                 this.$message({
                   message: '操作成功',
@@ -177,4 +208,5 @@
       }
     }
   }
+
 </script>

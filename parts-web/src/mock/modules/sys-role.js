@@ -34,18 +34,18 @@ for (let i = 0; i < Math.floor(Math.random() * 10 + 1); i++) {
 // }
 
 // 获取角色列表, 根据当前用户
-export function select () {
-  return {
-    // isOpen: false,
-    url: '/sys/role/select',
-    type: 'get',
-    data: {
-      'msg': 'success',
-      'code': 0,
-      'list': dataList
-    }
-  }
-}
+// export function select () {
+//   return {
+//     // isOpen: false,
+//     url: '/sys/role/select',
+//     type: 'get',
+//     data: {
+//       'msg': 'success',
+//       'code': 0,
+//       'list': dataList
+//     }
+//   }
+// }
 
 // 获取角色信息
 // export function info () {

@@ -17,7 +17,7 @@ fnCreate(oss, true)
 fnCreate(sysConfig, true)
 fnCreate(sysLog, true)
 // fnCreate(sysMenu, true)
-fnCreate(sysRole, true)
+// fnCreate(sysRole, true)
 fnCreate(sysUser, true)
 
 /**

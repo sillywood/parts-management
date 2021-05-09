@@ -1,8 +1,11 @@
 let roleSchema = require('../Entity/roleEntity')
 let roleModel = roleSchema.roleModel
 let snowId = require('../../../../utils/snowId')
+let userRoleSchema = require('../Entity/userRoleEntity')
+let userRoleModel = userRoleSchema.userRoleModel
+const roleMenuService = require('./roleMenuService')
 
-
+//分页获取角色列表
 exports.getRoleList = function (data) {
     return new Promise((res, rej) => {
         let list = {
@@ -46,39 +49,66 @@ exports.getRoleList = function (data) {
 
 }
 
+//部分也获取角色列表
 
-exports.getUserRoleIdList = async function (userId) {
-    let roleIdList = []
-    await roleModel.find({
-        userId: userId
-    }, {
-        _id: 1
-    }).then((err, docs) => {
-        if (err) {
-            console.log(err);
-        } else {
-            roleIdList = docs
-        }
+exports.getAllRoleList =async function(){
+    let list = []
+    await new Promise((res,rej)=>{
+        roleModel.find((err, docs) => {
+            if(err){
+                rej(err)
+            }else{
+                
+               list = JSON.parse(JSON.stringify(docs)) 
+                // console.log(list);
+               res(docs)
+            }
+            
+        })
     })
-    return roleIdList
+    return list
 }
 
 
-exports.saveRole = async function (roleEntity) {
+
+
+exports.saveRole = async function (roleEntity, menuIdList, creator) {
+    let flag = false
     roleEntity.roleId = roleEntity._id = (new snowId({
         mid: new Date()
     })).generate()
-    let id = ''
-    await new roleModel(roleEntity).save((err, doc) => {
-        if (err) {
-            console.log(err)
-        } else {
-            // console.log(doc);
-            id = doc._id
-            // console.log(id);
-        }
+    await new Promise((res,rej)=>{
+        new roleModel(roleEntity).save((err, doc) => {
+            if (err) {
+                console.log(err)
+            } else {
+                // console.log(doc);
+                let id = doc._id
+
+                console.log('保存角色成功，开始保存角色菜单');
+                let roleMenuEntities = []
+                for (let index in menuIdList) {
+                    let temp = {
+                        roleId: id,
+                        menuId: menuIdList[index],
+                        creator: creator
+                    }
+                    roleMenuEntities.push(temp)
+                }
+                roleMenuService.saveRoleMenus(roleMenuEntities).then(result => {
+                    if(result == true){
+                        res(flag = true)
+                    }else{
+                        rej('保存角色菜单关系失败')
+                    }
+                })
+                // console.log(id);
+            }
+        })
+    }).catch(err=>{
+        console.log(err);
     })
-    return id
+    return flag
 }
 
 exports.getRoleById = async function (id) {
@@ -92,9 +122,14 @@ exports.getRoleById = async function (id) {
                 res('err')
                 console.log(err);
             } else {
-                role = doc
+                role = JSON.parse(JSON.stringify(doc.toObject()))
+                roleMenuService.getRoleMenuIdList(id).then(result=>{
+                    role.menuIdList = result
+                    res(role)
+                }).catch(err=>{
+                    rej(err)
+                })
                 // console.log(role);
-                res(role)
             }
         })
     })
@@ -104,19 +139,21 @@ exports.getRoleById = async function (id) {
 
 exports.update = async function(data){
     let flag = false
+    let menuIdList = data.menuIdList
     delete data.menuIdList
     await new Promise((res,rej)=>{
         roleModel.updateOne({ roleId: data.roleId }, { $set: data }, (err, raw) => {
             if (err) {
                 console.log(err);
             } else {
-                if (err) {
-                    console.log(err);
-                    res('err')
-                } else if (raw.ok) {
-                    console.log(raw);
-                    res(flag = true)
-                }
+                    // console.log(raw);
+                roleMenuService.update(data.roleId,menuIdList).then(result=>{
+                    if(result == true){
+                        res(flag = true)
+                    }else{
+                        rej('保存角色菜单失败')
+                    }
+                })
             }
         })
     })
@@ -127,20 +164,37 @@ exports.update = async function(data){
 exports.deleteById = async function(id){
     let flag = false
     await new Promise((res,rej)=>{
-        roleModel.deleteOne({ roleId: id }, (err, raw) => {
-            if (err) {
-                console.log(err);
-            } else {
-                if (err) {
-                    console.log(err);
-                    res('err')
-                } else if (raw.ok) {
-                    console.log(raw);
-                    res(flag = true)
-                }
+        roleMenuService.deleteByRoleId(id).then(result=>{
+           if(result == true){
+                console.log('删除角色-菜单成功，待删除角色');
+                roleModel.deleteOne({ roleId: id }, (err, raw) => {
+                    if (err) {
+                        console.log(err);
+                        rej(err)
+                    } else {
+                        if (raw.ok) {
+                            // console.log(raw);
+                            console.log('删除角色成功');
+                            res(flag = true)
+                        } else {
+                            rej('删除角色失败')
+                        }
+                    }
+                })
             }
         })
+        
     })
     return flag
     
+}
+
+exports.getRoleByUserId = async function(id){
+    userRoleModel.find({userId:id},(err,docs)=>{
+        if(err){
+            console.log(err);
+        }else{
+            console.log(docs);
+        }
+    })
 }
