@@ -89,14 +89,14 @@ for (let i = 0; i < Math.floor(Math.random() * 10 + 1); i++) {
 // }
 
 // 删除用户
-export function del () {
-  return {
-    // isOpen: false,
-    url: '/sys/user/delete',
-    type: 'post',
-    data: {
-      'msg': 'success',
-      'code': 0
-    }
-  }
-}
+// export function del () {
+//   return {
+//     // isOpen: false,
+//     url: '/sys/user/delete',
+//     type: 'post',
+//     data: {
+//       'msg': 'success',
+//       'code': 0
+//     }
+//   }
+// }

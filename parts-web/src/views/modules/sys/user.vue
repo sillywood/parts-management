@@ -69,6 +69,9 @@
     components: {
       AddOrUpdate
     },
+    created(){
+      // this.getDataList()
+    },
     activated() {
       this.getDataList()
     },

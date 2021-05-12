@@ -21,6 +21,7 @@ const login = require('./src/modules/system/controller/loginController')
 const logout = require('./src/modules/system/controller/logoutController')
 const menuRouter = require('./src/modules/system/controller/menuController')
 const roleRouter = require('./src/modules/system/controller/roleController')
+const storageRouter = require('./src/modules/partsManagement/controller/index')
 let app = express();
 
 app.SUPER_USER = 1;
@@ -85,6 +86,9 @@ app.use("/captcha.jpg", captchaRouter)
 app.use("/logout", logout)
 app.use("/menu",menuRouter(app))
 app.use("/role",roleRouter(app))
+app.use("/storage", storageRouter)
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
