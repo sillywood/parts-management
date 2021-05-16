@@ -74,22 +74,20 @@ export default {
     getDataList() {
       this.page = 1
       this.dataListLoading = true
-      let page = {
-        page: this.page,
-        limit: this.pageSize
-      }
       this.$http({
         url: this.$http.adornUrl(this.mixinOptions.getDataList),
         method: 'get',
         params: this.$http.adornParams({
           ...this.dataForm,
+          page: this.page,
+          limit: this.pageSize
         })
       }).then(({
         data
       }) => {
         if (data && data.code === 0) {
-          this.dataList = isPage?data.page.list:data.data
-          this.total = isPage?data.page.total:0
+          this.dataList = this.mixinOptions.isPage?data.page.list:data.data
+          this.total = this.mixinOptions.isPage?data.page.total:0
         } 
         this.dataListLoading = false
       })

@@ -35,6 +35,14 @@ app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-
   useUnifiedTopology: true,
   useCreateIndex: true
 })
+mongoose.connection.once('open', () => {
+  console.log('数据库已连接');
+ })
+
+mongoose.connection.once('close', () => {
+  console.log('数据库已断开连接');
+})
+
 
 
 

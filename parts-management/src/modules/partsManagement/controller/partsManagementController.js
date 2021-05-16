@@ -88,6 +88,24 @@ router.post('/delete',function(req,res){
     })
 })
 
+router.get('/getAllList',function(req,res){
+    partsManagementService.getAllList().then(result=>{
+        // console.log(result);
+        res.send({
+            code:0,
+            msg:'success',
+            data:result
+        })
+    }).catch(err=>{
+        console.log(err);
+        res.send({
+            code:500,
+            msg:'服务器内部异常'
+        })
+    })
+    
+})
+
 
 
 

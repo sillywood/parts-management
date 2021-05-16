@@ -73,3 +73,16 @@ exports.delete = async function(id){
         })
     })
 }
+
+exports.getAllList =async function(){
+    return new Promise((res,rej)=>{
+        partsModule.find((err, docs) => {
+            if (err) {
+                console.log(err);
+                rej(err)
+            } else {
+                res(JSON.parse(JSON.stringify(docs)))
+            }
+        })
+    }) 
+}
