@@ -207,15 +207,10 @@
             // console.log(this.multipleSelection[index].partsOutNum);
             let flag = true // 标识item是否可操作，操作过，说明有重复且已合并，后续的遍历不再操作
             tempDetails.filter((item, i) => {
-              
               if (item.partsId == this.multipleSelection[index].partsId) {
-                console.log(11111111111);
-                console.log(item);
-                console.log(this.multipleSelection[index]);
                 this.detailDatas[i] = JSON.parse(JSON.stringify(this.multipleSelection[index]))
                 flag = false
               } else if(i == tempDetails.length-1 && flag){
-                console.log(222222222222222);
                 this.detailDatas.push(JSON.parse(JSON.stringify(this.multipleSelection[index])))
               }
             })
@@ -264,7 +259,7 @@
         //     customClass: 'zZindex'
         //   })
         // }
-        console.log(flag);
+        // console.log(flag);
         if (flag) {
           this.$http({
             url: this.$http.adornUrl('/storage/storage/outDetail'),
@@ -272,6 +267,18 @@
             data: {
               details: this.detailDatas,
               custom: this.custom
+            }
+          }).then(({data:res})=>{
+            if(res.code == 0){
+              this.$message({
+                type:'success',
+                message:'操作成功'
+              })
+            }else{
+              this.$message({
+                type:'error',
+                msg:res.msg
+              })
             }
           })
         }

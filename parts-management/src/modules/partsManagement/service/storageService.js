@@ -83,6 +83,7 @@ exports.outParts = function(details){
                            rej(err)
                        }else{
                            console.log(raw);
+                           res(true)
                        }
                    })
                }

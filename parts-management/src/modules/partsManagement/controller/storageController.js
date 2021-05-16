@@ -41,7 +41,20 @@ router.post('/outDetail',function(req,res){
     let data = req.body
     let details = data.details
     let custom = data.custom 
-    storageService.outParts(details)
+    storageService.outParts(details).then(result=>{
+        if(result == true){
+            res.send({
+                code:0,
+                msg:'success'
+            })
+        }else{
+            console.log(result);
+            res.send({
+                code:500,
+                msg:result
+            })
+        }
+    })
     .catch(err=>{
         console.log(err);
         res({
