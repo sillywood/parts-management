@@ -70,7 +70,7 @@
 
     </el-row>
     <el-row>
-      <el-table :data="dataList" @selection-change="handleSelectionChange" Checkbox border style="width: 100%"
+      <el-table v-loading="dataListLoading" :data="dataList" @selection-change="handleSelectionChange" Checkbox border style="width: 100%"
         :row-key="getRowKey">
         <el-table-column type="selection" width="55">
         </el-table-column>
@@ -274,6 +274,7 @@
                 type:'success',
                 message:'操作成功'
               })
+              this.getDataList()
             }else{
               this.$message({
                 type:'error',

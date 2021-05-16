@@ -83,7 +83,9 @@ exports.outParts = function(details){
                            rej(err)
                        }else{
                            console.log(raw);
-                           res(true)
+                           if(i == length-1 ){
+                               res(true)
+                           }
                        }
                    })
                }
